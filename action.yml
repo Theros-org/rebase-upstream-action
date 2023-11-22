@@ -43,14 +43,11 @@ runs:
 
         git remote add upstream $UPSTREAM;
 
-        git fetch upstream ${{ inputs.branch }} $DEPTH;
-
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com";
-        git config --local user.name  "GitHub Actions";
+        git fetch --tags -f upstream ${{ inputs.branch }} $DEPTH;
 
         git rebase upstream/${{ inputs.branch }};
 
         if [ "${{ inputs.push }}" = "true" -a "$(git status | grep diverged)" ]; then
-            git push origin $(git branch --show-current) --force-with-lease;
+            git push -f --tags origin $(git branch --show-current) --force-with-lease;
         fi;
       shell: bash
