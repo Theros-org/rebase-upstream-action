@@ -48,6 +48,7 @@ runs:
         git rebase upstream/${{ inputs.branch }};
 
         if [ "${{ inputs.push }}" = "true" -a "$(git status | grep diverged)" ]; then
-            git push -f --tags origin $(git branch --show-current) --force-with-lease;
+            gh pr create --title "PR create test" --body "this is a test" --head "test-branch"
+            #git push -f --tags origin $(git branch --show-current) --force-with-lease;
         fi;
       shell: bash
